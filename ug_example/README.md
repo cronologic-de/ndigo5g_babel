@@ -85,8 +85,8 @@ Go to tools: `cd tools`, then run the following command:
 | **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                                                  | `cmake --build ..\build\bfD --config Debug`       | `driver\x64\Debug`     |
 | **Windows x86**   | Release       | `cmake -B ..\build\bf32R -A Win32`                                              | `cmake --build ..\build\bf32R --config Release`   | `driver\x86\Release`   |
 | **Windows x86**   | Debug         | `cmake -B ..\build\bf32D -A Win32`                                              | `cmake --build ..\build\bf32D --config Debug`     | `driver\x86\Debug`     |
-| **Linux x86_64**  | Release       | `cmake -B ..\build\bfR -DCMAKE_BUILD_TYPE=Release`                              | `cmake --build ..\build\bfR`                      | `driver\x64\Release`   |
-| **Linux x86_64**  | Debug         | `cmake -B ..\build\bfD -DCMAKE_BUILD_TYPE=Debug`                                | `cmake --build ..\build\bfD`                      | `driver\x64\Debug`     |
+| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release`                              | `cmake --build ../build/bfR`                      | `driver/x64/Release`   |
+| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`                                | `cmake --build ../build/bfD`                      | `driver/x64/Debug`     |
 
 * The default configuration is `Debug` on Windows, and `Release` on Linux.
 * Linux x86 is not supported.
