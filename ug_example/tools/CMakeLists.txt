@@ -38,13 +38,7 @@ set(CRONO_DEP_PKG_INC_DIR       ${CRONO_DEP_PKG_DIR}/include)
 include_directories(${CRONO_TARGET_NAME} PRIVATE ${CRONO_DEP_PKG_INC_DIR})
 
 # Link to ndigo_driver library ________________________________________
-IF(CRONO_GEN_ARCH STREQUAL "x86" AND CRONO_GEN_PLATFORM STREQUAL "windows")
-        add_library(ndigo_driver SHARED IMPORTED GLOBAL)
-        set_target_properties(ndigo_driver PROPERTIES IMPORTED_IMPLIB 
-                ndigo_driver.lib)  
-        set(CRONO_DEP_PKG_LIB_DIR ${CRONO_DEP_PKG_DIR}/x86)
-        set(CRONO_NDIGO_LIB_NAME ndigo_driver.lib)
-ELSEIF(CRONO_GEN_ARCH STREQUAL "x86_64" AND CRONO_GEN_PLATFORM STREQUAL "windows")
+IF(CRONO_GEN_ARCH STREQUAL "x86_64" AND CRONO_GEN_PLATFORM STREQUAL "windows")
         add_library(ndigo_driver_64 SHARED IMPORTED GLOBAL)
         set_target_properties(ndigo_driver_64 PROPERTIES IMPORTED_IMPLIB 
                 ndigo_driver_64.lib)  
@@ -74,10 +68,7 @@ add_executable(${CRONO_TARGET_NAME}
 
 # Windows-specific Configurations _____________________________________________
 IF ( CRONO_GEN_PLATFORM  STREQUAL "windows")
-        IF( CRONO_GEN_ARCH STREQUAL "x86" 
-            AND CRONO_GEN_PLATFORM STREQUAL "windows")
-                target_link_libraries(${CRONO_TARGET_NAME} ndigo_driver)
-        ELSEIF( CRONO_GEN_ARCH STREQUAL "x86_64" 
+        IF( CRONO_GEN_ARCH STREQUAL "x86_64" 
                 AND CRONO_GEN_PLATFORM STREQUAL "windows")
                 target_link_libraries(${CRONO_TARGET_NAME} ndigo_driver_64)
         ENDIF()
