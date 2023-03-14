@@ -64,9 +64,4 @@ ELSEIF (CRONO_GEN_PLATFORM STREQUAL "linux")
 
         # Link to ndigo_driver library 
         target_link_libraries(${CRONO_TARGET_NAME} libndigo_driver.a)
-
-        # Rename the library with prefix `lib` for the linker to find it
-        add_custom_command(TARGET ${CRONO_TARGET_NAME} PRE_BUILD 
-                COMMAND "cp" ${CRONO_DEP_PKG_LIB_DIR}/ndigo_driver.a 
-                        ${CRONO_DEP_PKG_LIB_DIR}/libndigo_driver.a)
 ENDIF()
