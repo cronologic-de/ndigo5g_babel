@@ -9,8 +9,6 @@ on:
     
 env:
   BUILD_TYPE: Release
-  SOLUTION_FILE_PATH: .\dummy\msvscpp\
-  COMMIT_MSG: 'Internal build due to code change' 
   TOOLS_SUB_DIR: 'ug_example/tools'
   BUILD_PATH: '../build/bfRU'
 
@@ -97,31 +95,3 @@ jobs:
       with:
           name: Ubuntu-ug_ex
           path: lib/x64/Release/xtdc4_ugex.exe
-
-  Check-Build-timetagger4_user_guide_example:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
-      
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      
-    - name: Get changed files in concerned folder(s)
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v35
-      with:
-        files: |
-          lib/**
-          include/**
-          timetagger4_user_guide_example/**
-          .github/workflows/build_all.yml
-          
-    # Check if any file(s) in the concerned folder changed
-    - name: Check
-      id: check
-      if: steps.changed-files-specific.outputs.any_changed == 'false'
-      run: |
-        echo "No concerned files changed, suppressing processing."       
-        echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
