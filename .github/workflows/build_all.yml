@@ -1,7 +1,7 @@
 name: Build All Projects
 
 on:
-  workflow_dispatch:
+#  workflow_dispatch:
   push:
     paths: # Collected from paths of all jobs below
     - 'include/**'
@@ -94,5 +94,5 @@ jobs:
     - name: Archive output
       uses: actions/upload-artifact@v3
       with:
-          name: Ubuntu-ug_ex
+          name: Win-ug_ex
           path: lib/x64/Release/ndigo_ugex.exe
