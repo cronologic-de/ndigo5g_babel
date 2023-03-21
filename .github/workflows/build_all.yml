@@ -1,6 +1,7 @@
 name: Build All Projects
 
 on:
+  workflow_dispatch:
   push:
     paths: # Collected from paths of all jobs below
     - 'include/**'
