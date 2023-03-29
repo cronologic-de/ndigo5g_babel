@@ -86,8 +86,9 @@ Go to tools: `cd tools`, then run the following command:
 
 ## Run/Debug the Sample
 
-**Prerequisites**
-- Cronologic Kernel Module is installed.
+#### Prerequisites
+1. `Cronologic PCI Linux Kernel Module` is installed on the machine. You can build it from [`cronologic_linux_kernel`](https://github.com/cronologic-de/cronologic_linux_kernel) on github.
+2. Device is installed properly on the machine.
 
 **Steps**
 - Run the executable found in the _Output Folder_ from system command
