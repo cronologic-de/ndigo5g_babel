@@ -1,6 +1,5 @@
 //
 // Header file containing structs and #defines specific for NdigoAverager
-// The current driver version for Ndigo devices is 1.4.3.0
 //
 
 #ifndef NDIGOAVERAGER_INTERFACE_H
