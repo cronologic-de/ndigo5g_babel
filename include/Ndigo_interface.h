@@ -1,6 +1,5 @@
 //
 // Header file containing structs and #defines specific for Ndigo5G
-// The current driver version for Ndigo devices is 1.4.3.0
 //
 
 #ifndef NDIGO_INTERFACE_H
@@ -125,7 +124,7 @@ extern "C" {
 #define NDIGO_ADC_MODE_DDDD 15
 
 /*!\ingroup adcdefs
- * \brief temporarily unavailable ADC modes
+ * \brief currently unavailable ADC modes
  *
  * availability of the following modes depends on the specific hardware/
  * firmware revision
@@ -133,7 +132,7 @@ extern "C" {
 #define NDIGO_ADC_MODE_A12 28
 
 /*!\ingroup adcdefs
- * \brief temporarily unavailable ADC modes
+ * \brief currently unavailable ADC modes
  *
  * availability of the following modes depends on the specific hardware/
  * firmware revision
@@ -141,7 +140,7 @@ extern "C" {
 #define NDIGO_ADC_MODE_B12 29
 
 /*!\ingroup adcdefs
- * \brief temporarily unavailable ADC modes
+ * \brief currently unavailable ADC modes
  *
  * availability of the following modes depends on the specific hardware/
  * firmware revision
@@ -149,7 +148,7 @@ extern "C" {
 #define NDIGO_ADC_MODE_C12 30
 
 /*!\ingroup adcdefs
- * \brief temporarily unavailable ADC modes
+ * \brief currently unavailable ADC modes
  *
  * availability of the following modes depends on the specific hardware/
  * firmware revision

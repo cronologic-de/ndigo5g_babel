@@ -1,7 +1,6 @@
 //
 // Header file containing structs and #defines commonly used by header files of
 // derived Ndigo device classes The current driver version for Ndigo devices
-// is 1.4.3.0
 //
 
 #ifndef NDIGO_COMMON_INTERFACE_H
@@ -945,7 +944,7 @@ NDIGO_API int ndigo_acknowledge(ndigo_device *device,
                                 volatile ndigo_packet *packet);
 
 /**
- * current version of data structures used by the interface
+ * current version of ndigo_static_info data structures used by the interface
  * When the definition of the structure is changed the version number is
  * incremented.
  */
@@ -1152,6 +1151,13 @@ NDIGO_API int ndigo_get_static_info(ndigo_device *device,
  */
 #define NDIGO_ALERT_ADC_TEMPERATURE_CRITICAL 32
 
+/**
+ * current version of ndigo_fast_info data structures used by the interface
+ * When the definition of the structure is changed the version number is
+ * incremented.
+ */
+#define NDIGO_FAST_INFO_VERSION 1
+
 /*! \ingroup fastinfo
  *	\brief contains fast dynamic information
  *
@@ -1221,6 +1227,12 @@ typedef struct {
      * depends on system configuration.
      */
     int pcie_max_payload;
+
+    /*! \brief Data rate of the PCIe card.
+     *
+     * depends on system configuration.
+     */
+    int pcie_link_speed;
 } ndigo_fast_info;
 
 /*! \ingroup paraminfo

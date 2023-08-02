@@ -1,6 +1,5 @@
 //
 // Header file containing structs and #defines specific for Ndigo250M
-// The current driver version for Ndigo devices is 1.4.3.0
 //
 
 #ifndef NDIGO250M_INTERFACE_H
