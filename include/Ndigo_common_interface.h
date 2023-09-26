@@ -1151,6 +1151,20 @@ NDIGO_API int ndigo_get_static_info(ndigo_device *device,
  */
 #define NDIGO_ALERT_ADC_TEMPERATURE_CRITICAL 32
 
+/*! \ingroup alertdefs
+ *	\brief ADC temperature critical (> 100@htmlonly &#176C @endhtmlonly)
+ */
+#define NDIGO_ALERT_ADC_TEMPERATURE_CRITICAL 32
+
+#define CRONO_PCIE_RX_ERROR 1 << 16
+#define CRONO_PCIE_BAD_TLP 1 << 22
+#define CRONO_PCIE_BAD_DLLP 1 << 23
+#define CRONO_PCIE_REPLAY_NUM_ROLLOVER 1 << 24
+#define CRONO_PCIE_REPLAY_TIMER_TIMEOUT 1 << 28
+#define CRONO_PCIE_ADVISORY_NON_FATAL 1 << 29
+#define CRONO_PCIE_CORRECTED_INTERNAL_ERROR 1 << 30
+#define CRONO_PCIE_HEADER_LOG_OVERFLOW 1 << 31
+
 /**
  * current version of ndigo_fast_info data structures used by the interface
  * When the definition of the structure is changed the version number is
