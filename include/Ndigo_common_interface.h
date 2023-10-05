@@ -1156,14 +1156,6 @@ NDIGO_API int ndigo_get_static_info(ndigo_device *device,
  */
 #define NDIGO_ALERT_ADC_TEMPERATURE_CRITICAL 32
 
-#define CRONO_PCIE_RX_ERROR 1 << 16
-#define CRONO_PCIE_BAD_TLP 1 << 22
-#define CRONO_PCIE_BAD_DLLP 1 << 23
-#define CRONO_PCIE_REPLAY_NUM_ROLLOVER 1 << 24
-#define CRONO_PCIE_REPLAY_TIMER_TIMEOUT 1 << 28
-#define CRONO_PCIE_ADVISORY_NON_FATAL 1 << 29
-#define CRONO_PCIE_CORRECTED_INTERNAL_ERROR 1 << 30
-#define CRONO_PCIE_HEADER_LOG_OVERFLOW 1 << 31
 
 /**
  * current version of ndigo_fast_info data structures used by the interface
@@ -1435,6 +1427,99 @@ NDIGO_API const char *ndigo_get_device_name(ndigo_device *device);
  *board_id changes have to be done before cronotools initialization.
  */
 NDIGO_API int ndigo_set_board_id(ndigo_device *device, int board_id);
+
+/*! \defgroup pcieconst Constant for PCIe information
+ *	\brief contains the PCIe status flags only relevant when troubleshooting
+ */
+
+#define CRONO_PCIE_RX_ERROR 1 << 0
+#define CRONO_PCIE_BAD_TLP 1 << 6
+#define CRONO_PCIE_BAD_DLLP 1 << 7
+#define CRONO_PCIE_REPLAY_NUM_ROLLOVER 1 << 8
+#define CRONO_PCIE_REPLAY_TIMER_TIMEOUT 1 << 12
+#define CRONO_PCIE_ADVISORY_NON_FATAL 1 << 13
+#define CRONO_PCIE_CORRECTED_INTERNAL_ERROR 1 << 14
+#define CRONO_PCIE_HEADER_LOG_OVERFLOW 1 << 15
+
+#define CRONO_PCIE_UNC_UNDEFINED  1 << 0;
+#define CRONO_PCIE_UNC_DATA_LINK_PROTOCOL_ERROR 1 << 4
+#define CRONO_PCIE_UNC_SURPRISE_DOWN_ERROR 1 << 5
+#define CRONO_PCIE_UNC_POISONED_TLP 1 << 12
+#define CRONO_PCIE_UNC_FLOW_CONTROL_PROTOCOL_ERROR 1 << 13
+#define CRONO_PCIE_UNC_COMPLETION_TIMEOUT 1 << 14
+#define CRONO_PCIE_UNC_COMPLETER_ABORT 1 << 15
+#define CRONO_PCIE_UNC_UNEXPECTED_COMPLETION 1 << 16
+#define CRONO_PCIE_UNC_RECEIVER_OVERFLOW_ERROR 1 << 17
+#define CRONO_PCIE_UNC_MALFORMED_TLP 1 << 18
+#define CRONO_PCIE_UNC_ECRC_ERROR 1 << 19
+#define CRONO_PCIE_UNC_UNSUPPORED_REQUEST_ERROR 1 << 20
+
+#define CRONO_PCIE_RX_ERROR 1 << 0
+#define CRONO_PCIE_BAD_TLP 1 << 6
+#define CRONO_PCIE_BAD_DLLP 1 << 7
+#define CRONO_PCIE_REPLAY_NUM_ROLLOVER 1 << 8
+#define CRONO_PCIE_REPLAY_TIMER_TIMEOUT 1 << 12
+#define CRONO_PCIE_ADVISORY_NON_FATAL 1 << 13
+#define CRONO_PCIE_CORRECTED_INTERNAL_ERROR 1 << 14
+#define CRONO_PCIE_HEADER_LOG_OVERFLOW 1 << 15
+
+typedef struct {
+    /*! \brief organizes power supply of PCIe lanes
+     */
+    uint32_t pwr_mgmt;
+
+    /*! \brief Number of PCIe lanes that the card uses.
+     *
+     * Should be 4 for Ndigo5G
+     */
+    uint32_t link_width;
+
+    /*! \brief Maximum size in bytes for one PCIe transaction
+     *
+     * depends on system configuration.
+     */
+    uint32_t max_payload;
+
+    /*! \brief Data rate of the PCIe card.
+     *
+     * depends on system configuration.
+     */
+    uint32_t link_speed;
+
+    /*! \brief Correctable error status flags, directly from PCIe config register
+     *
+     * Useful for debugging PCIe problems
+     */
+    uint32_t correctable_error_status;
+
+    /*! \brief Uncorrectable error status flags, directly from PCIe config
+     * register
+     *
+     * Useful for debugging PCIe problems
+     */
+    uint32_t uncorrectable_error_status;
+    /*! \brief != if the PCIe error status is supported for this device
+     */
+    uint32_t error_status_supported;
+
+} crono_pcie_info;
+
+/*! \defgroup pciefuncts Functions for PCIe information
+ *	\brief reads the PCIe info like correctable and uncorrectable 
+ *
+ */
+NDIGO_API int ndigo_get_pcie_info(ndigo_device *device,
+                                  crono_pcie_info *pcie_info);
+
+#define NDIGO_PCIE_CORRECTABLE_FLAG 1
+#define NDIGO_PCIE_UNCORRECTABLE_FLAG 2
+/*!
+ *	\brief clear pci errors, only useful for PCIE problem debuggin
+ *  flags
+ *  NDIGO_PCIE_CORRECTABLE_FLAG clear all correctable errors
+ *  NDIGO_PCIE_UNCORRECTABLE_FLAG clear all uncorrectable errors
+ */
+NDIGO_API int ndigo_clear_pcie_errors(ndigo_device *device, int flags);
 
 #ifdef __cplusplus
 }
