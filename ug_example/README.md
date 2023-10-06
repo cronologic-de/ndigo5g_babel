@@ -64,7 +64,7 @@ Select `Build -> Build All` from menu, or any standard Visual Studio way to buil
 The Target Exectuable name is `ndigo_ugex.exe`.
 | Configuration     | `CMakeSettings` | `Build root`                     | `CMake generator`     | Output Folder          |
 | ----------------- | --------------- | -------------------------------- | --------------------- | ---------------------  |
-| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `lib\x64\Release`   |
+| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `lib\x64\Debug`   |
 | **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | `lib\x64\Release`   |
 * The provided file builds the project using `Visual Studio 2022`, however, you can change `generator` in  `CMakeSettings.json` to any other Visual Studio generator you have on your machine.
 
