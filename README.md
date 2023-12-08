@@ -12,6 +12,7 @@ We encourage you to contribute to this repository. By uploading to this reposito
 # Examples
 User Guide Example project and code provided:
 1. [ug_example](./ug_example).
+2. [ug_example_250M](./ug_examplug_example_250M).
 
 * It can be built on Windows and Linux.
 * The provided prebuilt linux libraries are tested on Ubuntu/Debian, and might work for other distributions, if they didn't work with you, please contact cronologic support team.

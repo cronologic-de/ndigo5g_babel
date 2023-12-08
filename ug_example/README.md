@@ -28,18 +28,6 @@ You can download the user guide from the [product web page](https://www.cronolog
 ##### 1. Install `CMake`
 To check if `CMake` is installed, run `cmake --version`; if not installed, please refer to [Installing CMake](https://cmake.org/install/).
 
-##### 2. Driver Files Provided
-The `driver` files are found as following:
-```
-.
-└── ndigo5g_babel/
-    ├── include/
-    │   └── .h
-    └── lib/x64/
-        ├── .lib    (Windows only)
-        ├── .dll    (Windows only)
-        └── .a      (Linux only)
-```
 
 ### Build Using Visual Studio for Windows
 It is mainly done using `CMakeSettings.json` file provided in [`tools` folder](/tools/CMakeSettings.json) package, that uses the projects [`CMakeLists.txt`](/tools/CMakeLists.tx).
@@ -73,14 +61,13 @@ The Target Exectuable name is `ndigo_ugex.exe`.
 Go to tools: `cd tools`, then run the following command:
 | Platform          | Configuration | Configur CMake ommand                                                           | Compile & Link Command                            | Output Folder          |
 | ----------------- | ------------- | -------------------------------------------------     | ------------------------------------------------- | ---------------------  |
-| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                                                  | `cmake --build ..\build\bfR --config Release`     | `lib\x64\Release`   |
-| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                                                  | `cmake --build ..\build\bfD --config Debug`       | `lib\x64\Debug`     |
-| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release`                              | `cmake --build ../build/bfR`                      | `lib/x64`   |
-| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`                                | `cmake --build ../build/bfD`                      | `lib/x64`     |
+| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                                                  | `cmake --build ..\build\bfR --config Release`     | `bin`   |
+| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                                                  | `cmake --build ..\build\bfD --config Debug`       | `bin`     |
+| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release`                              | `cmake --build ../build/bfR`                      | `bin`   |
+| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`                                | `cmake --build ../build/bfD`                      | `bin`     |
 
 * The default configuration is `Debug` on Windows, and `Release` on Linux.
 * Linux x86 is not supported.
-* The provided `libndigo_driver.a` is built on Ubuntu.
 
 ---
 

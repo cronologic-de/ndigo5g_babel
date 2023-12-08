@@ -20,7 +20,6 @@ int main(int argc, char* argv[])
 	for (int i = 0; i < NDIGO250M_DMA_COUNT; i++)
 		params.buffer_size[i] = BUFFER_SIZE;
 
-
 	int error_code;
 	const char *error_message;
 	ndigo_device* ndgo = ndigo250m_init(&params, &error_code, &error_message);
@@ -31,7 +30,6 @@ int main(int argc, char* argv[])
 
 	ndigo250m_configuration config;
 	ndigo250m_get_default_configuration(ndgo, &config);
-
 
 	// disable unused trigger blocks
 	config.trigger_block[1].enabled = false;
@@ -65,22 +63,28 @@ int main(int argc, char* argv[])
 	int count = 0;
 
 	while (count < 10) {
-		ndigo_read_in in;
+		ndigo250m_read_in in;
 		// Do not wait for data
 		// (if set to 1 the ndigo_acknowledge function has to be removed)
 		in.acknowledge_last_read = 0;
-		ndigo_read_out out;
-		int result = ndigo_read(ndgo, &in, &out);
+		ndigo250m_read_out out;
+		int result = ndigo250m_read(ndgo, &in, &out);
+        printf("result %d\n", result);
 		if ((NDIGO_OK == result) && (out.first_packet != nullptr))
 		{
 			// buffer received with one or more packets
-			volatile ndigo_packet *packet = out.first_packet;
-			while (packet <= out.last_packet) {
+            for (int i = 0; i < NDIGO250M_DMA_COUNT; i++) {
+    			volatile ndigo_packet *packet = out.first_packet[i];
+                if (!packet) {
+                    printf("Error getting packet %d\n", i);
+                    continue;
+                }
+                printf("$$ %d, packet %p\n", i, packet);
 				int length = 0;
 				if (!(packet->type & NDIGO_PACKET_TYPE_TIMESTAMP_ONLY))
 					length = packet->length;
 
-				printf("Card %d, Channel %d, Flags %d, Length %d, Timestamp %llu \n",
+				printf("Card %d, Channel %d, Flags %d, Length %d, Timestamp %lu \n",
 					packet->card, packet->channel, packet->flags, length, packet->timestamp);
 
 				if (!(packet->type & NDIGO_PACKET_TYPE_TIMESTAMP_ONLY))
@@ -90,10 +94,6 @@ int main(int argc, char* argv[])
 						printf("%6d, ", *(data++));
 					printf("\n\n");
 				}
-				// current packet pointer is invalid after call to ndigo_acknowledge()
-				volatile ndigo_packet *next_packet = ndigo_next_packet(packet);
-				ndigo_acknowledge(ndgo, packet);
-				packet = next_packet;
 				count++;
 			}
 		}
