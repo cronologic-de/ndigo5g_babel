@@ -2,7 +2,6 @@
 // ndigo_user_guide_example_250.cpp : User guide example for Ndigo250M driver programming
 //
 
-#include "Ndigo_interface.h"
 #include "Ndigo250M_interface.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,7 +20,7 @@ int main(int argc, char* argv[])
 		params.buffer_size[i] = BUFFER_SIZE;
 
 	int error_code;
-	const char *error_message;
+	const char* error_message;
 	ndigo_device* ndgo = ndigo250m_init(&params, &error_code, &error_message);
 	if (error_code != NDIGO_OK) {
 		printf("\nError %d: %s\n", error_code, error_message);
@@ -69,17 +68,18 @@ int main(int argc, char* argv[])
 		in.acknowledge_last_read = 0;
 		ndigo250m_read_out out;
 		int result = ndigo250m_read(ndgo, &in, &out);
-        printf("result %d\n", result);
-		if ((NDIGO_OK == result) && (out.first_packet != nullptr))
+		printf("result %d\n", result);
+		if ((NDIGO_READ_OK == result))
 		{
 			// buffer received with one or more packets
-            for (int i = 0; i < NDIGO250M_DMA_COUNT; i++) {
-    			volatile ndigo_packet *packet = out.first_packet[i];
-                if (!packet) {
-                    printf("Error getting packet %d\n", i);
-                    continue;
-                }
-                printf("$$ %d, packet %p\n", i, packet);
+			for (int i = 0; i < NDIGO250M_DMA_COUNT; i++) {
+				volatile ndigo_packet* packet = out.first_packet[i];
+				if (out.error_code[i] != NDIGO_READ_OK || !packet) {
+					// only print out errors
+					if (out.error_code[i] != NDIGO_READ_NO_DATA)
+						printf("Error getting packet on channel: %d code: %d error:%s\n", i, out.error_code[i], out.error_message[i]);
+					continue;
+				}
 				int length = 0;
 				if (!(packet->type & NDIGO_PACKET_TYPE_TIMESTAMP_ONLY))
 					length = packet->length;
