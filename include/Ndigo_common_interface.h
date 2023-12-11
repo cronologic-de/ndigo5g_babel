@@ -1156,7 +1156,6 @@ NDIGO_API int ndigo_get_static_info(ndigo_device *device,
  */
 #define NDIGO_ALERT_ADC_TEMPERATURE_CRITICAL 32
 
-
 /**
  * current version of ndigo_fast_info data structures used by the interface
  * When the definition of the structure is changed the version number is
@@ -1428,21 +1427,18 @@ NDIGO_API const char *ndigo_get_device_name(ndigo_device *device);
  */
 NDIGO_API int ndigo_set_board_id(ndigo_device *device, int board_id);
 
-
 /*! \defgroup pciefuncts Functions for PCIe information
- *	\brief reads the PCIe info like correctable and uncorrectable 
+ *	\brief reads the PCIe info like correctable and uncorrectable
  *
  */
 NDIGO_API int ndigo_get_pcie_info(ndigo_device *device,
                                   crono_pcie_info *pcie_info);
 
-#define NDIGO_PCIE_CORRECTABLE_FLAG 1
-#define NDIGO_PCIE_UNCORRECTABLE_FLAG 2
 /*!
  *	\brief clear pci errors, only useful for PCIE problem debuggin
  *  flags
- *  NDIGO_PCIE_CORRECTABLE_FLAG clear all correctable errors
- *  NDIGO_PCIE_UNCORRECTABLE_FLAG clear all uncorrectable errors
+ *  CRONO_PCIE_CORRECTABLE_FLAG clear all correctable errors
+ *  CRONO_PCIE_UNCORRECTABLE_FLAG clear all uncorrectable errors
  */
 NDIGO_API int ndigo_clear_pcie_errors(ndigo_device *device, int flags);
 
