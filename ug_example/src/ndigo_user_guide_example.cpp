@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
 				if (!(packet->type & NDIGO_PACKET_TYPE_TIMESTAMP_ONLY))
 					length = packet->length;
 
-				printf("Card %d, Channel %d, Flags %d, Length %d, Timestamp %llu \n",
+				printf("Card %d, Channel %d, Flags %d, Length %d, Timestamp %lu \n",
 					packet->card, packet->channel, packet->flags, length, packet->timestamp);
 
 				if (!(packet->type & NDIGO_PACKET_TYPE_TIMESTAMP_ONLY))

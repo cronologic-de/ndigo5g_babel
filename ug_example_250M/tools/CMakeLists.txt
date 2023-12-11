@@ -29,25 +29,16 @@ ENDIF()
 set(CRONO_DEP_PKG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/include)
 include_directories(${CRONO_TARGET_NAME} PRIVATE ${CRONO_DEP_PKG_INC_DIR})
 
-# Link to xtdc4_driver library ________________________________________________
+# Link to ndigo_driver library ________________________________________________
 set(CRONO_DEP_PKG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib/x64)
 link_directories(${CRONO_DEP_PKG_LIB_DIR})
 
 # Set output directory_________________________________________________________
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CRONO_DEP_PKG_LIB_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/bin)
 
-# Validate that directories exist _____________________________________________
-IF(     NOT EXISTS "${CRONO_DEP_PKG_LIB_DIR}" 
-     OR NOT EXISTS "${CRONO_DEP_PKG_INC_DIR}"
-) 
-        message(FATAL_ERROR 
-                "Crono: Please copy driver installation folder driver to the project root. "
-"Lib: <${CRONO_DEP_PKG_LIB_DIR}>, Include: <${CRONO_DEP_PKG_INC_DIR}>.")
-ENDIF()
-        
 # Add the EXE ytarget  ________________________________________________________
 add_executable(${CRONO_TARGET_NAME} 
-        ${PROJ_SRC_INDIR}/src/ndigo_user_guide_example_250M.cpp)
+        ../src/ndigo_user_guide_example_250M.cpp)
 
 # Windows-specific Configurations _____________________________________________
 IF ( CRONO_GEN_PLATFORM  STREQUAL "windows")
@@ -64,9 +55,4 @@ ELSEIF (CRONO_GEN_PLATFORM STREQUAL "linux")
 
         # Link to ndigo_driver library 
         target_link_libraries(${CRONO_TARGET_NAME} libndigo_driver.a)
-
-        # Rename the library with prefix `lib` for the linker to find it
-        add_custom_command(TARGET ${CRONO_TARGET_NAME} PRE_BUILD 
-                COMMAND "cp" ${CRONO_DEP_PKG_LIB_DIR}/ndigo_driver.a 
-                        ${CRONO_DEP_PKG_LIB_DIR}/libndigo_driver.a)
 ENDIF()

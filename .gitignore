@@ -1,5 +1,10 @@
 build
 ug_example/driver
+ug_example/build
 ug_example_250M/driver
 .vs
 driver
+ug_example_250M/build
+bin/ndigo_250M_ugex
+lib/x64/ndigo_ugex
+bin/ndigo_ugex
