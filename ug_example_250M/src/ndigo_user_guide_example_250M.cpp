@@ -66,6 +66,7 @@ int main(int argc, char* argv[])
 		// Do not wait for data
 		// (if set to 1 the ndigo_acknowledge function has to be removed)
 		in.acknowledge_last_read = 0;
+		in.mask = 0;
 		ndigo250m_read_out out;
 		int result = ndigo250m_read(ndgo, &in, &out);
 		printf("result %d\n", result);
