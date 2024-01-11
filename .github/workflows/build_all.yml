@@ -68,7 +68,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: Ubuntu-ug_ex
-          path: lib/x64/ndigo_ugex
+          path: bin/ndigo_ugex
         
   Build-Win:
     needs: Check-Build-user_guide_example
@@ -95,4 +95,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: Win-ug_ex
-          path: lib/x64/Release/ndigo_ugex.exe
+          path: bin/ndigo_ugex.exe
