@@ -1,5 +1,5 @@
 # ndigo5g_babel
-Wrappers, Utilities and Examples for using the Ndigo5G-10 with various programming languages.
+Wrappers, Utilities and Examples for using the Ndigo5G-10 and Ndigo250M with various programming languages.
 
 
 ## License
@@ -11,8 +11,8 @@ We encourage you to contribute to this repository. By uploading to this reposito
 
 # Examples
 User Guide Example project and code provided:
-1. [ug_example](./ug_example).
-2. [ug_example_250M](./ug_examplug_example_250M).
+1. [Ndigo5G ug_example](./ug_example).
+2. [Ndigo250M ug_example_250M](./ug_examplug_example_250M).
 
 # Ndigo250M 
 Ndigo250M requires cronologic_linux_kernel version of 1.1.0 or newer because of contiguous buffers usage.
