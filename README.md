@@ -13,4 +13,4 @@ We encourage you to contribute to this repository. By uploading to this reposito
 A user guide example project is provided in [./ug_example/](./ug_example)
 ([./ug_example_250M/](./ug_example_250M) if you are using an Ndigo250M).
 
-Follow the instructions within the directory on how to compile the project.
+Follow the instructions within the directory on how to compile and run the project on Windows and Linux.
