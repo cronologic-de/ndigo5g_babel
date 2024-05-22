@@ -333,11 +333,11 @@ typedef struct {
      * auto_trigger_random_exponent @endlink that result in a distance between
      * triggers of
      *
-     * T = 1 + M + [1...2^N]
+     * T = M + [1...2^N] - 1
      *
      * clock cycles.
      *
-     * 0 <= M < 2^32
+     * 8 <= M < 2^32
      *
      * 0 <= N < 32
      *
@@ -353,11 +353,11 @@ typedef struct {
      * auto_trigger_random_exponent @endlink that result in a distance between
      * triggers of
      *
-     * T = 1 + M + [1...2^N]
+     * T = M + [1...2^N] - 1
      *
      * clock cycles.
      *
-     * 0 <= M < 2^32
+     * 8 <= M < 2^32
      *
      * 0 <= N < 32
      *
