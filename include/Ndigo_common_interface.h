@@ -240,6 +240,7 @@
 #define NDIGO_SYNCHRONIZATION_FAILED 13
 #define NDIGO_DEVICE_OPEN_FAILED 14
 #define NDIGO_INTERNAL_ERROR 15
+#define NDIGO_INVALID_ARGUMENTS 17
 /*!@}*/
 
 #ifdef __cplusplus
@@ -413,6 +414,7 @@ struct ndigo_packet {
  *	\brief contains information on the current device.
  */
 typedef struct {
+    bool is_valid;
     void *ndigo;
 } ndigo_device;
 
@@ -644,8 +646,8 @@ typedef struct {
      * either allocated @link bufferdef NDIGO_BUFFER_ALLOCATE,
      * NDIGO_BUFFER_USE_PREALLOCATED @endlink (relevant for 250M on Windows) or
      * @link bufferdef NDIGO_BUFFER_USE_PHYSICAL @endlink (supported on linux).
-     * For Ndigo5G must be set to D125_BUFFER_ALLOCATE. For Ndigo250M must be
-     * set to	NDIGO_BUFFER_ALLOCATE.
+     * For Ndigo5G must be set to NDIGO_BUFFER_ALLOCATE. For Ndigo250M must be
+     * set to NDIGO_BUFFER_ALLOCATE.
      */
     int buffer_type;
 
