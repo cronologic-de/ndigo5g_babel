@@ -20,14 +20,11 @@ You can download the user guide from the [product web page](https://www.cronolog
 
 ## Build the Project
 
-The project is build using `CMake`.
-
-If you don't have `CMake` installed, refer to [Installing CMake](https://cmake.org/install/) for instructions. You can check if `CMake` is installed by
-running `cmake --version`.
-
-On **Windows**, you can install the project using either `CMake` directly, or using Visual Studio 2019 (or later), see [Build Using `CMake`](#build-using-cmake) or [Build Using Visual Studio](#build-using-visual-studio), respectively.
-
-On **Linux**, you can install the project using `CMake`, see [Build Using `CMake`](#build-using-cmake).
+- The project is a `Console` App.
+- The project is build using `CMake`.
+- If you don't have `CMake` installed, refer to [Installing CMake](https://cmake.org/install/) for instructions. You can check if `CMake` is installed by running `cmake --version`.
+- On **Windows**, you can build the project using either `CMake` directly, or using Visual Studio 2019 (or later), see [Build Using `CMake`](#build-using-cmake) or [Build Using Visual Studio](#build-using-visual-studio), respectively.
+- On **Linux**, you can build the project using `CMake`, see [Build Using `CMake`](#build-using-cmake).
 
 ---
 
@@ -37,7 +34,7 @@ On **Linux**, you can install the project using `CMake`, see [Build Using `CMake
 - Visual Studio 2019 or later
 - [C++ CMake tools for Windows](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio#installation)
 
-  You can install these from the _Visual Studio Installer_ under 
+  You can install them from the _Visual Studio Installer_ under 
   _Desktop development with C++_.
 
 **Open and configure the project**
@@ -58,45 +55,33 @@ The target executable name is `ndigo_ugex.exe`.
 
 | Configuration     | `CMakeSettings` | `Build root`                     | `CMake generator`     | Output Folder          |
 | ----------------- | --------------- | -------------------------------- | --------------------- | ---------------------  |
-| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `lib\x64\Debug`   |
-| **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | `lib\x64\Release`   |
+| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `<Build root>\Debug`   |
+| **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | `<Build root>\Release`   |
 
-
-> **Note**
-The provided file builds the project using Visual Studio 2022, however, you can change `generator` in [`CMakeSettings.json`](./tools/CMakeSettings.json) to any other Visual Studio generator you have on your machine.
-
+**Notes**
+* The provided file builds the project using Visual Studio 2022, however, you can change `generator` in [`CMakeSettings.json`](./tools/CMakeSettings.json) to any other Visual Studio generator you have on your machine.
+* Driver library is copied automatically by the build script from `./lib` folder to the output folder.
 
 ---
 
 ### Build using `CMake`
 
-In a terminal, navigate to `tools\` and run the following command
+In a terminal, navigate to `tools\` and run the following command:
 
-| Platform          | Configuration | Configure CMake command                                                           | Compile & Link Command                            | Output Folder          |
-| ----------------- | ------------- | -------------------------------------------------     | ------------------------------------------------- | ---------------------  |
-| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                                                  | `cmake --build ..\build\bfR --config Release`     | `bin`   |
-| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                                                  | `cmake --build ..\build\bfD --config Debug`       | `bin`     |
-| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release`                              | `cmake --build ../build/bfR`                      | `bin`   |
-| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`                                | `cmake --build ../build/bfD`                      | `bin`     |
+| Platform          | Configuration | Configure CMake command                            | Compile & Link Command                       | Output Folder |
+| ----------------- | ------------- | -------------------------------------------------  | -------------------------------------------- | -------  |
+| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                     | `cmake --build ..\build\bfR --config Release`| `${projectDir}\..\build\bfR\Release` |
+| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                     | `cmake --build ..\build\bfD --config Debug`  | `${projectDir}\..\build\bfD\Debug` |
+| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release` | `cmake --build ../build/bfR`                 | `${projectDir}/../build/bfR` |
+| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`   | `cmake --build ../build/bfD`                 | `${projectDir}/../build/bfD` |
 
-> **Note**
-The default configuration is `Debug` on Windows, and `Release` on Linux.
+**Notes**
+* The default configuration is `Debug` on Windows, and `Release` on Linux.
+* For Windows: driver library is copied automatically by the build script from `./lib` folder to the output folder.
+* Linux `x86` is not supported.
 
-> **Note**
-Linux `x86` is not supported.
-
----
 ---
 
 ## Run/Debug the Program
-
-### Windows
-
-1. The device driver is necessary to run the executable. You can download the
-   driver from cronologic's Ndigo5G [product page](https://www.cronologic.de/product/ndigo5g-10).
-2. Copy `ndigo5g_babel\lib\ndigo_driver_64.dll` to the _Output Folder_.
-3. In a terminal, navigate to the _Output Folder_ and run the executable
-
-### Linux
-1. `Cronologic PCI Linux Kernel Module` needs to be installed on your machine. You can build it from [`cronologic_linux_kernel`](https://github.com/cronologic-de/cronologic_linux_kernel) on GitHub.
-2. In a terminal, navigate to the _Output Folder_ and run the executable. `sudo` privileges might be necessary.
+- Nothing special, just run/debug from Visual Studio on Windows, or cmd/terminal command line.
+- On Linux, `sudo` privileges is needed.

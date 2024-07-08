@@ -30,13 +30,10 @@ set(CRONO_DEP_PKG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/include)
 include_directories(${CRONO_TARGET_NAME} PRIVATE ${CRONO_DEP_PKG_INC_DIR})
 
 # Link to ndigo_driver library ________________________________________________
-set(CRONO_DEP_PKG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib/x64)
+set(CRONO_DEP_PKG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib)
 link_directories(${CRONO_DEP_PKG_LIB_DIR})
 
-# Set output directory_________________________________________________________
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/bin)
-
-# Add the EXE ytarget  ________________________________________________________
+# Add the EXE target  _________________________________________________________
 add_executable(${CRONO_TARGET_NAME} 
         ../src/ndigo_user_guide_example.cpp)
 
@@ -47,9 +44,16 @@ IF ( CRONO_GEN_PLATFORM  STREQUAL "windows")
                 ndigo_driver_64.lib)  
         target_link_libraries(${CRONO_TARGET_NAME} ndigo_driver_64)
 
+        add_custom_command(TARGET ${CRONO_TARGET_NAME} POST_BUILD 
+                COMMAND "echo" Copying libraries from '/lib' folder to output folder...
+                COMMAND ${CMAKE_COMMAND} -E copy
+                        \"${CRONO_DEP_PKG_LIB_DIR}/ndigo_driver_64.dll\" 
+                        \"${CMAKE_BINARY_DIR}/$<CONFIG>\" 
+        )
+
 # Linux-specific Configurations _______________________________________________
 ELSEIF (CRONO_GEN_PLATFORM STREQUAL "linux") 
-        # Compilation options _____________________________________________________
+        # Compilation options _________________________________________________
         add_compile_options(-fPIC -Wall $<$<CONFIG:Debug>:-g>)
         add_compile_definitions($<$<CONFIG:Debug>:CRONO_DEBUG_ENABLED>)
 
