@@ -33,7 +33,7 @@ include_directories(${CRONO_TARGET_NAME} PRIVATE ${CRONO_DEP_PKG_INC_DIR})
 set(CRONO_DEP_PKG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib)
 link_directories(${CRONO_DEP_PKG_LIB_DIR})
 
-# Add the EXE ytarget  ________________________________________________________
+# Add the EXE target  _________________________________________________________
 add_executable(${CRONO_TARGET_NAME} 
         ../src/ndigo_user_guide_example_250M.cpp)
 
