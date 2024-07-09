@@ -58,9 +58,9 @@ The target executable name is `ndigo_ugex.exe`.
 | **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `<Build root>\Debug`   |
 | **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | `<Build root>\Release`   |
 
-**Notes**
-* The provided file builds the project using Visual Studio 2022, however, you can change `generator` in [`CMakeSettings.json`](./tools/CMakeSettings.json) to any other Visual Studio generator you have on your machine.
-* Driver library is copied automatically by the build script from `./lib` folder to the output folder.
+> **Notes**
+> * The provided file builds the project using Visual Studio 2022, however, you can change `generator` in [`CMakeSettings.json`](./tools/CMakeSettings.json) to any other Visual Studio generator you have on your machine.
+> * Driver library is copied automatically by the build script from `./lib` folder to the output folder.
 
 ---
 
@@ -75,13 +75,14 @@ In a terminal, navigate to `tools\` and run the following command:
 | **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release` | `cmake --build ../build/bfR`                 | `${projectDir}/../build/bfR` |
 | **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`   | `cmake --build ../build/bfD`                 | `${projectDir}/../build/bfD` |
 
-**Notes**
-* The default configuration is `Debug` on Windows, and `Release` on Linux.
-* For Windows: driver library is copied automatically by the build script from `./lib` folder to the output folder.
-* Linux `x86` is not supported.
+> **Notes**
+> * The default configuration is `Debug` on Windows, and `Release` on Linux.
+> * For Windows: driver library is copied automatically by the build script from `./lib` folder to the output folder.
+> * Linux `x86` is not supported.
 
 ---
 
 ## Run/Debug the Program
 - Nothing special, just run/debug from Visual Studio on Windows, or cmd/terminal command line.
 - On Linux, `sudo` privileges is needed.
+
