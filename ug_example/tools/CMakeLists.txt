@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 set(CRONO_TARGET_NAME "ndigo_ugex")
 project(${CRONO_TARGET_NAME})
+
 # _____________________________________________________________________________
-# Build Windows/Linux(x86_64) `ndigo_ugex.exe/Linux` executable, 
+# Build Windows/Linux `ndigo_ugex.exe/Linux` executable, 
 # for (Debug/Release) configurations.
 # _____________________________________________________________________________
 
@@ -46,7 +47,7 @@ IF ( CRONO_GEN_PLATFORM  STREQUAL "windows")
 
         add_custom_command(TARGET ${CRONO_TARGET_NAME} POST_BUILD 
                 COMMAND "echo" Copying libraries from '/lib' folder to output folder...
-                COMMAND ${CMAKE_COMMAND} -E copy
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
                         \"${CRONO_DEP_PKG_LIB_DIR}/ndigo_driver_64.dll\" 
                         \"${CMAKE_BINARY_DIR}/$<CONFIG>\" 
         )

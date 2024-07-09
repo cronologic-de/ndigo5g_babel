@@ -46,7 +46,7 @@ IF ( CRONO_GEN_PLATFORM  STREQUAL "windows")
 
         add_custom_command(TARGET ${CRONO_TARGET_NAME} POST_BUILD 
                 COMMAND "echo" Copying libraries from '/lib' folder to output folder...
-                COMMAND ${CMAKE_COMMAND} -E copy
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
                         \"${CRONO_DEP_PKG_LIB_DIR}/ndigo_driver_64.dll\" 
                         \"${CMAKE_BINARY_DIR}/$<CONFIG>\" 
         )
