@@ -16,7 +16,6 @@ You can download the user guide from the [product web page](https://www.cronolog
 ```
 
 ---
----
 
 ## Build the Project
 
