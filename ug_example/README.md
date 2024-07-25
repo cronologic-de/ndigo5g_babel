@@ -3,9 +3,10 @@
 ## About
 
 This directory contains a project to compile the C++ example shown in the user guide of the cronologic Ndigo5G-10 analog-to-digital converter.
-The project is a `Console` App.
 
 You can download the user guide from the [product web page](https://www.cronologic.de/products/adcs/cronologic-ndigo5g-10).
+
+Output is `ndigo_ugex.exe` for Windows, and `ndigo_ugex` for Ubuntu/Debian, and is found on the root shared folder [`/bin`](./bin).
 
 ## Directory Structure
 ```
@@ -18,7 +19,6 @@ You can download the user guide from the [product web page](https://www.cronolog
 ---
 
 ## Build the Project
-
 - The project is a `Console` App.
 - The project is build using `CMake`.
 - If you don't have `CMake` installed, refer to [Installing CMake](https://cmake.org/install/) for instructions. You can check if `CMake` is installed by running `cmake --version`.
@@ -50,16 +50,14 @@ Select `Build -> Build All` from the menu bar (or any standard Visual Studio way
 
 **Project Environments and Configurations**
 
-The target executable name is `ndigo_ugex.exe`.
-
-| Configuration     | `CMakeSettings` | `Build root`                     | `CMake generator`     | Output Folder          |
-| ----------------- | --------------- | -------------------------------- | --------------------- | ---------------------  |
-| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | `<Build root>\Debug`   |
-| **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | `<Build root>\Release`   |
+| Configuration     | `CMakeSettings` | `Build root`                     | `CMake generator`     | 
+| ----------------- | --------------- | -------------------------------- | --------------------- | 
+| **x86_64 Debug**  | x64-Debug       | `${projectDir}\..\build\bfvsD`   | Visual Studio 17 2022 Win64 | 
+| **x86_64 Release**| x64-Release     | `${projectDir}\..\build\bfvsR`   | Visual Studio 17 2022 Win64 | 
 
 > **Notes**
 > * The provided file builds the project using Visual Studio 2022, however, you can change `generator` in [`CMakeSettings.json`](./tools/CMakeSettings.json) to any other Visual Studio generator you have on your machine.
-> * Driver library is copied automatically by the build script from `./lib` folder to the output folder.
+> * The output folder is the same for both release and debug builds.
 
 ---
 
@@ -76,12 +74,17 @@ In a terminal, navigate to `tools\` and run the following command:
 
 > **Notes**
 > * The default configuration is `Debug` on Windows, and `Release` on Linux.
-> * For Windows: driver library is copied automatically by the build script from `./lib` folder to the output folder.
+> * The output folder is the same for both release and debug builds.
+> * You can change the build/output directory from `CMakeLists.txt` file.
 > * Linux `x86` is not supported.
 
 ---
 
-## Run/Debug the Program
-- Nothing special, just run/debug from Visual Studio on Windows, or cmd/terminal command line.
-- On Linux, `sudo` privileges is needed.
+## Run/Debug the Sample
 
+### Windows
+In a terminal, navigate to `/bin` and run the executable. Alternatively, if you are using Visual Studio, you can run/debug the program from within Visual Studio.
+
+### Linux
+1. `Cronologic PCI Linux Kernel Module` needs to be installed on your machine. You can build it from [`cronologic_linux_kernel`](https://github.com/cronologic-de/cronologic_linux_kernel) on GitHub.
+2. In a terminal, navigate to the _Output Folder_ and run the executable. `sudo` privileges may be necessary.
