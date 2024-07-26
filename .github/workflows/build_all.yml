@@ -91,7 +91,10 @@ jobs:
   # ___________________________________________________________________________
   # 
     UG_EX-Win-Build:
-      needs: Check-Build-UG_EX
+      needs: 
+       - Check-Build-UG_EX
+       - UG_EX-Linux-Build  # Guarnatee Sequential Build
+       
       runs-on:  windows-latest
   
       env: 
@@ -163,7 +166,8 @@ jobs:
     UG_EX_250M-Linux-Build:
       needs:
        - Check-Build-UG_EX_250M
-       - UG_EX-Linux-Build  # Guarnatee Sequential Build
+       - UG_EX-Win-Build  # Guarnatee Sequential Build
+       
       runs-on: ubuntu-latest
   
       env: 
@@ -205,7 +209,7 @@ jobs:
     UG_EX_250M-Win-Build:
       needs:       
        - Check-Build-UG_EX_250M
-       - UG_EX-Win-Build  # Guarnatee Sequential Build
+       - UG_EX_250M-Linux-Build  # Guarnatee Sequential Build
       runs-on:  windows-latest
   
       env: 
