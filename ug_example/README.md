@@ -65,12 +65,12 @@ Select `Build -> Build All` from the menu bar (or any standard Visual Studio way
 
 In a terminal, navigate to `tools\` and run the following command:
 
-| Platform          | Configuration | Configure CMake command                            | Compile & Link Command                       | Output Folder |
-| ----------------- | ------------- | -------------------------------------------------  | -------------------------------------------- | -------  |
-| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                     | `cmake --build ..\build\bfR --config Release`| `${projectDir}\..\build\bfR\Release` |
-| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                     | `cmake --build ..\build\bfD --config Debug`  | `${projectDir}\..\build\bfD\Debug` |
-| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release` | `cmake --build ../build/bfR`                 | `${projectDir}/../build/bfR` |
-| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`   | `cmake --build ../build/bfD`                 | `${projectDir}/../build/bfD` |
+| Platform          | Configuration | Configure CMake command                           | Compile & Link Command                            | 
+| ----------------- | ------------- | ----------------------------------------------    | ------------------------------------------------- | 
+| **Windows x86_64**| Release       | `cmake -B ..\build\bfR -A x64`                    | `cmake --build ..\build\bfR --config Release`     | 
+| **Windows x86_64**| Debug         | `cmake -B ..\build\bfD -A x64`                    | `cmake --build ..\build\bfD --config Debug`       | 
+| **Linux x86_64**  | Release       | `cmake -B ../build/bfR -DCMAKE_BUILD_TYPE=Release`| `cmake --build ../build/bfR`                      | 
+| **Linux x86_64**  | Debug         | `cmake -B ../build/bfD -DCMAKE_BUILD_TYPE=Debug`  | `cmake --build ../build/bfD`                      | 
 
 > **Notes**
 > * The default configuration is `Debug` on Windows, and `Release` on Linux.
@@ -87,4 +87,4 @@ In a terminal, navigate to `/bin` and run the executable. Alternatively, if you 
 
 ### Linux
 1. `Cronologic PCI Linux Kernel Module` needs to be installed on your machine. You can build it from [`cronologic_linux_kernel`](https://github.com/cronologic-de/cronologic_linux_kernel) on GitHub.
-2. In a terminal, navigate to the _Output Folder_ and run the executable. `sudo` privileges may be necessary.
+2. In a terminal, navigate to the `./bin` and run the executable. `sudo` privileges may be necessary.
