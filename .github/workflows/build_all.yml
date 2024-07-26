@@ -21,32 +21,32 @@ jobs:
   # ===========================================================================
   #
     Check-Build-UG_EX:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
-      
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      
-    - name: Get changed files in concerned folder(s)
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v42
-      with:
-        files: |
-          lib/**
-          include/**
-          ug_example/**
-          .github/workflows/build_all.yml
-          
-    # Check if any file(s) in the concerned folder changed
-    - name: Check
-      id: check
-      if: steps.changed-files-specific.outputs.any_changed == 'false'
-      run: |
-        echo "No concerned files changed, suppressing processing."       
-        echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+      runs-on: ubuntu-latest
+      # Map a step output to a job output
+      outputs:
+        ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
+        
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Get changed files in concerned folder(s)
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            lib/**
+            include/**
+            ug_example/**
+            .github/workflows/build_all.yml
+            
+      # Check if any file(s) in the concerned folder changed
+      - name: Check
+        id: check
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        run: |
+          echo "No concerned files changed, suppressing processing."       
+          echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
         
   # ___________________________________________________________________________
   # 
@@ -131,32 +131,32 @@ jobs:
   # ===========================================================================
   #
     Check-Build-UG_EX_250M:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
-      
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      
-    - name: Get changed files in concerned folder(s)
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v42
-      with:
-        files: |
-          lib/**
-          include/**
-          ug_example_250M/**
-          .github/workflows/build_all.yml
-          
-    # Check if any file(s) in the concerned folder changed
-    - name: Check
-      id: check
-      if: steps.changed-files-specific.outputs.any_changed == 'false'
-      run: |
-        echo "No concerned files changed, suppressing processing."       
-        echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+      runs-on: ubuntu-latest
+      # Map a step output to a job output
+      outputs:
+        ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
+        
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Get changed files in concerned folder(s)
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            lib/**
+            include/**
+            ug_example_250M/**
+            .github/workflows/build_all.yml
+            
+      # Check if any file(s) in the concerned folder changed
+      - name: Check
+        id: check
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        run: |
+          echo "No concerned files changed, suppressing processing."       
+          echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
         
   # ___________________________________________________________________________
   # 
