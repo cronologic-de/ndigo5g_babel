@@ -79,6 +79,7 @@ jobs:
           cd ${{env.TOOLS_SUB_DIR}}
           cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           cmake --build ${{env.BUILD_PATH}}
+          ls -lah ${{env.CRONO_BIN_PATH}} 
           
       - name: Commit Executable
         if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
@@ -189,6 +190,7 @@ jobs:
           cd ${{env.TOOLS_SUB_DIR}}
           cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           cmake --build ${{env.BUILD_PATH}}
+          ls -lah ${{env.CRONO_BIN_PATH}} 
           
       - name: Commit Executable
         if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
