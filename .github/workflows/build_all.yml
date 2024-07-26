@@ -21,219 +21,227 @@ jobs:
   # ===========================================================================
   #
     Check-Build-UG_EX:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
-      
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      
-    - name: Get changed files in concerned folder(s)
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v42
-      with:
-        files: |
-          lib/**
-          include/**
-          ug_example/**
-          .github/workflows/build_all.yml
+      runs-on: ubuntu-latest
+      # Map a step output to a job output
+      outputs:
+        ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
+        
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Get changed files in concerned folder(s)
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            lib/**
+            include/**
+            ug_example/**
+            .github/workflows/build_all.yml
+            
+      # Check if any file(s) in the concerned folder changed
+      - name: Check
+        id: check
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        run: |
+          echo "No concerned files changed, suppressing processing."       
+          echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+        
+  # ___________________________________________________________________________
+  # 
+    UG_EX-Linux-Build:
+      needs: Check-Build-UG_EX
+      runs-on: ubuntu-latest
+  
+      env: 
+        TOOLS_SUB_DIR: 'ug_example/tools'
+        CRONO_EXE_NAME: ndigo_ugex
+  
+      steps:
+      - name: echo Suppress Status if Needed
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed == 'N' }}
+        run: |
+          echo "Job execution processing is suppressed for no cencerned files are changed."
           
-    # Check if any file(s) in the concerned folder changed
-    - name: Check
-      id: check
-      if: steps.changed-files-specific.outputs.any_changed == 'false'
-      run: |
-        echo "No concerned files changed, suppressing processing."       
-        echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+      - name: Checkout Code
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        uses: actions/checkout@v4
+  
+      - name: Pull latest changes
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        run: |
+          git pull --rebase
+  
+      - name: Configure CMake and Build
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        run: |
+          cd ${{env.TOOLS_SUB_DIR}}
+          cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake --build ${{env.BUILD_PATH}}
+          
+      - name: Commit Executable
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+            author_name: Internal Workflow Action
+            message: ${{env.COMMIT_MSG}}
+            add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
         
   # ___________________________________________________________________________
   # 
-  UG_EX-Linux-Build:
-    needs: Check-Build-UG_EX
-    runs-on: ubuntu-latest
-
-    env: 
-      TOOLS_SUB_DIR: 'ug_example/tools'
-      CRONO_EXE_NAME: ndigo_ugex
-
-    steps:
-    - name: echo Suppress Status if Needed
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed == 'N' }}
-      run: |
-        echo "Job execution processing is suppressed for no cencerned files are changed."
-        
-    - name: Checkout Code
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      uses: actions/checkout@v4
-
-    - name: Pull latest changes
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      run: |
-        git pull --rebase
-
-    - name: Configure CMake and Build
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed == 'N' }}
-      run: |
-        cd ${{env.TOOLS_SUB_DIR}}
-        cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        cmake --build ${{env.BUILD_PATH}}
-        
-    - name: Commit Executable
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      uses: EndBug/add-and-commit@v9
-      with:
-          author_name: Internal Workflow Action
-          message: ${{env.COMMIT_MSG}}
-          add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
-        
-  # ___________________________________________________________________________
-  # 
-  UG_EX-Win-Build:
-    needs: Check-Build-UG_EX
-    runs-on:  windows-latest
-
-    env: 
-      TOOLS_SUB_DIR: 'ug_example/tools'
-      CRONO_EXE_NAME: ndigo_ugex.exe
-
-    steps:
-    - name: echo Suppress Status if Needed
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed == 'N' }}
-      run: |
-        echo "Job execution processing is suppressed for no cencerned files are changed."
-        
-    - name: Checkout Code
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      uses: actions/checkout@v4
-
-    - name: Pull latest changes
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      run: |
-        git pull --rebase
-
-    - name: Configure CMake and Build
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      run: |
-        cd ${{env.TOOLS_SUB_DIR}}
-        cmake -B ${{env.BUILD_PATH}}
-        cmake --build ${{env.BUILD_PATH}} --config ${{env.BUILD_TYPE}}
-        
-    - name: Commit Executable
-      if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
-      uses: EndBug/add-and-commit@v9
-      with:
-          author_name: Internal Workflow Action
-          message: ${{env.COMMIT_MSG}}
-          add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
+    UG_EX-Win-Build:
+      needs: 
+       - Check-Build-UG_EX
+       - UG_EX-Linux-Build  # Guarnatee Sequential Build
+       
+      runs-on:  windows-latest
+  
+      env: 
+        TOOLS_SUB_DIR: 'ug_example/tools'
+        CRONO_EXE_NAME: ndigo_ugex.exe
+  
+      steps:
+      - name: echo Suppress Status if Needed
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed == 'N' }}
+        run: |
+          echo "Job execution processing is suppressed for no cencerned files are changed."
+          
+      - name: Checkout Code
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        uses: actions/checkout@v4
+  
+      - name: Pull latest changes
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        run: |
+          git pull --rebase
+  
+      - name: Configure CMake and Build
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        run: |
+          cd ${{env.TOOLS_SUB_DIR}}
+          cmake -B ${{env.BUILD_PATH}}
+          cmake --build ${{env.BUILD_PATH}} --config ${{env.BUILD_TYPE}}
+          
+      - name: Commit Executable
+        if: ${{needs.Check-Build-UG_EX.outputs.ok_to_proceed != 'N' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+            author_name: Internal Workflow Action
+            message: ${{env.COMMIT_MSG}}
+            add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
 
   # ===========================================================================
   #
     Check-Build-UG_EX_250M:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
-      
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      
-    - name: Get changed files in concerned folder(s)
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v42
-      with:
-        files: |
-          lib/**
-          include/**
-          ug_example_250M/**
-          .github/workflows/build_all.yml
+      runs-on: ubuntu-latest
+      # Map a step output to a job output
+      outputs:
+        ok_to_proceed: ${{ steps.check.outputs.ok_to_proceed_val }}
+        
+      steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Get changed files in concerned folder(s)
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v42
+        with:
+          files: |
+            lib/**
+            include/**
+            ug_example_250M/**
+            .github/workflows/build_all.yml
+            
+      # Check if any file(s) in the concerned folder changed
+      - name: Check
+        id: check
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        run: |
+          echo "No concerned files changed, suppressing processing."       
+          echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+        
+  # ___________________________________________________________________________
+  # 
+    UG_EX_250M-Linux-Build:
+      needs:
+       - Check-Build-UG_EX_250M
+       - UG_EX-Win-Build  # Guarnatee Sequential Build
+       
+      runs-on: ubuntu-latest
+  
+      env: 
+        TOOLS_SUB_DIR: 'ug_example_250M/tools'
+        CRONO_EXE_NAME: ndigo_250M_ugex
+  
+      steps:
+      - name: echo Suppress Status if Needed
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed == 'N' }}
+        run: |
+          echo "Job execution processing is suppressed for no cencerned files are changed."
           
-    # Check if any file(s) in the concerned folder changed
-    - name: Check
-      id: check
-      if: steps.changed-files-specific.outputs.any_changed == 'false'
-      run: |
-        echo "No concerned files changed, suppressing processing."       
-        echo "ok_to_proceed_val=N" >> $GITHUB_OUTPUT
+      - name: Checkout Code
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        uses: actions/checkout@v4
+  
+      - name: Pull latest changes
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        run: |
+          git pull --rebase
+  
+      - name: Configure CMake and Build
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        run: |
+          cd ${{env.TOOLS_SUB_DIR}}
+          cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake --build ${{env.BUILD_PATH}}
+          
+      - name: Commit Executable
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+            author_name: Internal Workflow Action
+            message: ${{env.COMMIT_MSG}}
+            add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
         
   # ___________________________________________________________________________
   # 
-  UG_EX_250M-Linux-Build:
-    needs: Check-Build-UG_EX_250M
-    runs-on: ubuntu-latest
-
-    env: 
-      TOOLS_SUB_DIR: 'ug_example_250M/tools'
-      CRONO_EXE_NAME: ndigo_250M_ugex
-
-    steps:
-    - name: echo Suppress Status if Needed
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed == 'N' }}
-      run: |
-        echo "Job execution processing is suppressed for no cencerned files are changed."
-        
-    - name: Checkout Code
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      uses: actions/checkout@v4
-
-    - name: Pull latest changes
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      run: |
-        git pull --rebase
-
-    - name: Configure CMake and Build
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed == 'N' }}
-      run: |
-        cd ${{env.TOOLS_SUB_DIR}}
-        cmake -B ${{env.BUILD_PATH}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        cmake --build ${{env.BUILD_PATH}}
-        
-    - name: Commit Executable
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      uses: EndBug/add-and-commit@v9
-      with:
-          author_name: Internal Workflow Action
-          message: ${{env.COMMIT_MSG}}
-          add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
-        
-  # ___________________________________________________________________________
-  # 
-  UG_EX_250M-Win-Build:
-    needs: Check-Build-UG_EX_250M
-    runs-on:  windows-latest
-
-    env: 
-      TOOLS_SUB_DIR: 'ug_example_250M/tools'
-      CRONO_EXE_NAME: ndigo_250M_ugex.exe
-
-    steps:
-    - name: echo Suppress Status if Needed
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed == 'N' }}
-      run: |
-        echo "Job execution processing is suppressed for no cencerned files are changed."
-        
-    - name: Checkout Code
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      uses: actions/checkout@v4
-
-    - name: Pull latest changes
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      run: |
-        git pull --rebase
-
-    - name: Configure CMake and Build
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      run: |
-        cd ${{env.TOOLS_SUB_DIR}}
-        cmake -B ${{env.BUILD_PATH}}
-        cmake --build ${{env.BUILD_PATH}} --config ${{env.BUILD_TYPE}}
-        
-    - name: Commit Executable
-      if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
-      uses: EndBug/add-and-commit@v9
-      with:
-          author_name: Internal Workflow Action
-          message: ${{env.COMMIT_MSG}}
-          add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
+    UG_EX_250M-Win-Build:
+      needs:       
+       - Check-Build-UG_EX_250M
+       - UG_EX_250M-Linux-Build  # Guarnatee Sequential Build
+      runs-on:  windows-latest
+  
+      env: 
+        TOOLS_SUB_DIR: 'ug_example_250M/tools'
+        CRONO_EXE_NAME: ndigo_250M_ugex.exe
+  
+      steps:
+      - name: echo Suppress Status if Needed
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed == 'N' }}
+        run: |
+          echo "Job execution processing is suppressed for no cencerned files are changed."
+          
+      - name: Checkout Code
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        uses: actions/checkout@v4
+  
+      - name: Pull latest changes
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        run: |
+          git pull --rebase
+  
+      - name: Configure CMake and Build
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        run: |
+          cd ${{env.TOOLS_SUB_DIR}}
+          cmake -B ${{env.BUILD_PATH}}
+          cmake --build ${{env.BUILD_PATH}} --config ${{env.BUILD_TYPE}}
+          
+      - name: Commit Executable
+        if: ${{needs.Check-Build-UG_EX_250M.outputs.ok_to_proceed != 'N' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+            author_name: Internal Workflow Action
+            message: ${{env.COMMIT_MSG}}
+            add: ${{env.CRONO_BIN_PATH}}${{env.CRONO_EXE_NAME}} --force
