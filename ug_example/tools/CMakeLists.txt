@@ -31,9 +31,9 @@ set(CRONO_DEP_PKG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/include)
 include_directories(${CRONO_TARGET_NAME} PRIVATE ${CRONO_DEP_PKG_INC_DIR})
 
 # Link to ndigo_driver library ________________________________________________________________________________________
-set(CRONO_DEP_PKG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib)
+set(CRONO_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/lib)
 set(CRONO_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PROJ_SRC_INDIR}/bin)
-link_directories(${CRONO_DEP_PKG_LIB_DIR})
+link_directories(${CRONO_LIB_DIR})
 
 # Add the EXE target  _________________________________________________________________________________________________
 add_executable(${CRONO_TARGET_NAME} ../src/ndigo_user_guide_example.cpp)
