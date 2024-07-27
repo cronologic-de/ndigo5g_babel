@@ -13,7 +13,6 @@ env:
   BUILD_TYPE: Release
   COMMIT_MSG: 'Internal build due to code change' 
   CRONO_BIN_PATH: ./bin/
-  CRONO_BIN_PATH_WIN: .\bin\
   BUILD_PATH: '../build/bfR'
 
 jobs:
