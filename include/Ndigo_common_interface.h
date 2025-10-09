@@ -52,12 +52,12 @@
  *
  *	This structure contains information about the board that does not change
  *during run time. It is provided by the function @link statfuncts
- *xtdc4_get_static_info() @endlink.
+ *ndigo_get_static_info() @endlink.
  */
 /*! \defgroup paraminfo Structure ndigo_param_info
  *	\brief contains configuration changes
  *
- *	Structure filled by @link statfuncts xtdc4_get_param_info() @endlink. This
+ *	Structure filled by @link statfuncts ndigo_get_param_info() @endlink. This
  *structure contains information that change indirectly due to configuration
  *changes.
  */
@@ -957,7 +957,7 @@ NDIGO_API int ndigo_acknowledge(ndigo_device *device,
  *
  *	This structure contains information about the board that does not change
  *during run time. It is provided by the function @link statfuncts
- *xtdc4_get_static_info() @endlink.
+ *ndigo_get_static_info() @endlink.
  */
 struct ndigo_static_info {
     /*! \brief The number of bytes occupied by the structure
@@ -1245,7 +1245,7 @@ typedef struct {
 /*! \ingroup paraminfo
  *	\brief contains configuration changes
  *
- *	Structure filled by @link statfuncts xtdc4_get_param_info() @endlink. This
+ *	Structure filled by @link statfuncts ndigo_get_param_info() @endlink. This
  *structure contains information that change indirectly due to configuration
  *changes.
  */
