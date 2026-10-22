@@ -307,6 +307,12 @@ extern "C" {
  * @brief Currently not used.
  */
 #define NDIGO_READ_TIMEOUT 3
+/*!
+ * @brief Error read has been called in a state, where it is not allowed (e.g. before start capture or after stop_capture
+ */
+#define NDIGO_READ_WRONG_STATE 4
+
+
 /*! @} */
 
 /*!
